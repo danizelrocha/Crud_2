@@ -18,7 +18,7 @@ const tempClient = {
 //Create
 
 const createClient = (client) => {
-    const db_client = {}
+    const db_client = localStorage.getItem('db_client')
     db_client.push (client)
   localStorage.setItem("db_client", JSON.stringify(db_client))
 }
