@@ -13,14 +13,15 @@ const tempClient = {
   cidade: "Santos",
 };
 
+const getLocalStorage = () => JSON.parse (localStorage.getItem('db_client')) ?? []
+const setLocalStorage = (dbClient) => localStorage.setItem("db_client", JSON.stringify(dbClient))
+
 //--------------CRUD-------------------
-
-//Create
-
+//Crud - CREATE
 const createClient = (client) => {
-    const db_client = localStorage.getItem('db_client')
-    db_client.push (client)
-  localStorage.setItem("db_client", JSON.stringify(db_client))
+  const dbClient = getLocalStorage()
+  dbClient.push (client)
+  setLocalStorage(dbClient)
 }
 
 //Eventos
@@ -28,4 +29,6 @@ document
   .getElementById("cadastrarCliente")
   .addEventListener("click", openModal);
 
-document.getElementById("modalClose").addEventListener("click", closeModal);
+document
+  .getElementById("modalClose")
+  .addEventListener("click", closeModal);
