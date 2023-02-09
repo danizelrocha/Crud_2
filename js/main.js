@@ -41,7 +41,17 @@ const deleteClient = (index) => {
   setLocalStorage(dbClient)
 }
 
-//Eventos
+
+
+//--------Interação com o layout---------
+const saveClient = () => {
+  if (isValidFields()){
+      console.log ("cadastro client")
+  }
+}
+
+
+//-------------Eventos-------------------
 document
   .getElementById("cadastrarCliente")
   .addEventListener("click", openModal);
@@ -49,3 +59,7 @@ document
 document
   .getElementById("modalClose")
   .addEventListener("click", closeModal);
+
+document
+  .getElementById('salvar')  
+  .addEventListener('click', saveClient)
