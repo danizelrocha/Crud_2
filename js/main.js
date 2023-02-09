@@ -3,17 +3,12 @@
 const openModal = () =>
   document.getElementById("modal").classList.add("active");
 
-const closeModal = () =>
+const closeModal = () => {
+  clearFields()
   document.getElementById("modal").classList.remove("active");
+}
 
-const tempClient = {
-  nome: "Laura",
-  email: "farnandarocha@gmail.com",
-  celular: "11991992813",
-  cidade: "Santos",
-};
-
-const getLocalStorage = () => JSON.parse (localStorage.getItem('db_client')) ?? []
+const getLocalStorage = () => JSON.parse (localStorage.getItem("db_client")) ?? []
 const setLocalStorage = (dbClient) => localStorage.setItem("db_client", JSON.stringify(dbClient))
 
 //--------------CRUD-------------------
@@ -41,14 +36,52 @@ const deleteClient = (index) => {
   setLocalStorage(dbClient)
 }
 
-
+//--------Validação da inscrição---------
+const isValidFields = () => {
+  return document.getElementById("form").reportValidity()
+}
 
 //--------Interação com o layout---------
 const saveClient = () => {
   if (isValidFields()){
-      console.log ("cadastro client")
+    const client = {
+      nome: document.getElementById("nome").value,
+      email: document.getElementById("email").value,
+      celular: document.getElementById("celular").value,
+      cidade: document.getElementById("cidade").value
+    }
+    createClient(client)
+    closeModal()
   }
 }
+
+//----------Limpar formulario------------
+const clearFields = () => {
+  const fields = document.querySelectorAll('.modal-field')
+  fields.forEach(field => field.value = "")
+}
+//-------Criando a Tabela----------------
+const createRow = (client) => {
+  const newRow = document.createElement('tr')
+  newRow.innerHTML = `
+    <td>$[client.nome]</td>
+    <td>$[client.email]</td>
+    <td>$[client.celular]</td>
+    <td>$[client.cidade]</td>
+    <td>
+      <button type="button" class="button green">editar</button>
+      <button type="button" class="button red">excluir</button>
+    </td>
+  `
+}
+
+//---------Atualiza a Tabela-------------
+const updateTable = () => {
+  const dbClient = readClient()
+  dbClient.forEach(createRow)
+}
+
+updateTable()
 
 
 //-------------Eventos-------------------
@@ -61,5 +94,5 @@ document
   .addEventListener("click", closeModal);
 
 document
-  .getElementById('salvar')  
-  .addEventListener('click', saveClient)
+  .getElementById("salvar")  
+  .addEventListener("click", saveClient)
