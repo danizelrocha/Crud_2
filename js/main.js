@@ -27,10 +27,17 @@ const createClient = (client) => {
 //cRud - READ
 const readClient = () => getLocalStorage()
 
-//crUp - UPDATE
+//crUd - UPDATE
 const updateClient = (index, client) => {
   const dbClient = readClient()
   dbClient[index] = client
+  setLocalStorage(dbClient)
+}
+
+//cruD - DELETE
+const deleteClient = (index) => {
+  const dbClient = readClient()
+  dbClient.splice(index, 1)
   setLocalStorage(dbClient)
 }
 
