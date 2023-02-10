@@ -4,87 +4,116 @@ const openModal = () =>
   document.getElementById("modal").classList.add("active");
 
 const closeModal = () => {
-  clearFields()
+  clearFields();
   document.getElementById("modal").classList.remove("active");
-}
+};
 
-const getLocalStorage = () => JSON.parse (localStorage.getItem("db_client")) ?? []
-const setLocalStorage = (dbClient) => localStorage.setItem("db_client", JSON.stringify(dbClient))
+const getLocalStorage = () =>
+  JSON.parse(localStorage.getItem("db_client")) ?? [];
+const setLocalStorage = (dbClient) =>
+  localStorage.setItem("db_client", JSON.stringify(dbClient));
 
 //--------------CRUD-------------------
 //Crud - CREATE
 const createClient = (client) => {
-  const dbClient = getLocalStorage()
-  dbClient.push (client)
-  setLocalStorage(dbClient)
-}
+  const dbClient = getLocalStorage();
+  dbClient.push(client);
+  setLocalStorage(dbClient);
+};
 
 //cRud - READ
-const readClient = () => getLocalStorage()
+const readClient = () => getLocalStorage();
 
 //crUd - UPDATE
 const updateClient = (index, client) => {
-  const dbClient = readClient()
-  dbClient[index] = client
-  setLocalStorage(dbClient)
-}
+  const dbClient = readClient();
+  dbClient[index] = client;
+  setLocalStorage(dbClient);
+};
 
 //cruD - DELETE
 const deleteClient = (index) => {
-  const dbClient = readClient()
-  dbClient.splice(index, 1)
-  setLocalStorage(dbClient)
-}
+  const dbClient = readClient();
+  dbClient.splice(index, 1);
+  setLocalStorage(dbClient);
+};
 
 //--------Validação da inscrição---------
 const isValidFields = () => {
-  return document.getElementById("form").reportValidity()
-}
+  return document.getElementById("form").reportValidity();
+};
 
 //--------Interação com o layout---------
 const saveClient = () => {
-  if (isValidFields()){
+  if (isValidFields()) {
     const client = {
       nome: document.getElementById("nome").value,
       email: document.getElementById("email").value,
       celular: document.getElementById("celular").value,
-      cidade: document.getElementById("cidade").value
-    }
-    createClient(client)
-    closeModal()
+      cidade: document.getElementById("cidade").value,
+    };
+    createClient(client);
+    updateTable();
+    closeModal();
   }
-}
+};
 
 //----------Limpar formulario------------
 const clearFields = () => {
-  const fields = document.querySelectorAll('.modal-field')
-  fields.forEach(field => field.value = "")
-}
-//-------Criando a Tabela----------------
+  const fields = document.querySelectorAll(".modal-field");
+  fields.forEach((field) => (field.value = ""));
+};
 
+//-------Criando a Tabela----------------
 const createRow = (client, index) => {
-  const newRow = document.createElement('tr')
+  const newRow = document.createElement("tr");
   newRow.innerHTML = `
       <td>${client.nome}</td>
       <td>${client.email}</td>
       <td>${client.celular}</td>
       <td>${client.cidade}</td>
       <td>
-          <button type="button" class="button green" id="edit-${index}">Editar</button>
-          <button type="button" class="button red" id="delete-${index}" >Excluir</button>
+        <button type="button" class="button green" id="edit-${index}">Editar</button>
+        <button type="button" class="button red" id="delete-${index}" >Excluir</button>
       </td>
-  `
-  document.querySelector('#tableClient>tbody').appendChild(newRow)
-}
+  `;
+  document.querySelector("#tableClient>tbody").appendChild(newRow);
+};
+
+//----------Limpar a tabela--------------
+const clearTable = () => {
+  const rows = document.querySelectorAll("#tableClient>tbody tr");
+  rows.forEach((row) => row.parentNode.removeChild(row));
+};
 
 //---------Atualiza a Tabela-------------
 const updateTable = () => {
-  const dbClient = readClient()
-  dbClient.forEach(createRow)
-}
+  const dbClient = readClient();
+  clearTable();
+  dbClient.forEach(createRow);
+};
 
-updateTable()
+//--------Editar Deletar Tabela------------
+const editDelete = (event) => {
+  if (event.target.type == "button") {
+    const [action, index] = event.target.id.split("-");
 
+    if (action == "edit") {
+      editClient(index);
+    } else {
+      const client = readClient()[index];
+      const response = confirm(
+        `Deseja realmente excluir o cliente ${client.nome}`
+      );
+      if (response) {
+        deleteClient(index);
+        updateTable();
+      }
+    }
+  }
+};
+
+updateTable();
 
 //-------------Eventos-------------------
 document
@@ -96,5 +125,9 @@ document
   .addEventListener("click", closeModal);
 
 document
-  .getElementById("salvar")  
-  .addEventListener("click", saveClient)
+  .getElementById("salvar")
+  .addEventListener("click", saveClient);
+
+document
+  .querySelector("#tableClient>tbody")
+  .addEventListener("click", editDelete);
