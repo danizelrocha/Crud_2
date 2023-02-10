@@ -94,6 +94,17 @@ const updateTable = () => {
 };
 
 //--------Editar Deletar Tabela------------
+
+//--------------Editar----------
+const editClient = (index) => {
+  const client = readClient()[index];
+  client.index = index;
+  fillFields(client);
+  document.querySelector(".modal-header>h2").textContent = `Editando ${client.nome}`;
+  openModal();
+};
+
+//------------Deletar-----------
 const editDelete = (event) => {
   if (event.target.type == "button") {
     const [action, index] = event.target.id.split("-");
@@ -120,13 +131,9 @@ document
   .getElementById("cadastrarCliente")
   .addEventListener("click", openModal);
 
-document
-  .getElementById("modalClose")
-  .addEventListener("click", closeModal);
+document.getElementById("modalClose").addEventListener("click", closeModal);
 
-document
-  .getElementById("salvar")
-  .addEventListener("click", saveClient);
+document.getElementById("salvar").addEventListener("click", saveClient);
 
 document
   .querySelector("#tableClient>tbody")
