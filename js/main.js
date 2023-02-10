@@ -61,18 +61,20 @@ const clearFields = () => {
   fields.forEach(field => field.value = "")
 }
 //-------Criando a Tabela----------------
-const createRow = (client) => {
+
+const createRow = (client, index) => {
   const newRow = document.createElement('tr')
   newRow.innerHTML = `
-    <td>$[client.nome]</td>
-    <td>$[client.email]</td>
-    <td>$[client.celular]</td>
-    <td>$[client.cidade]</td>
-    <td>
-      <button type="button" class="button green">editar</button>
-      <button type="button" class="button red">excluir</button>
-    </td>
+      <td>${client.nome}</td>
+      <td>${client.email}</td>
+      <td>${client.celular}</td>
+      <td>${client.cidade}</td>
+      <td>
+          <button type="button" class="button green" id="edit-${index}">Editar</button>
+          <button type="button" class="button red" id="delete-${index}" >Excluir</button>
+      </td>
   `
+  document.querySelector('#tableClient>tbody').appendChild(newRow)
 }
 
 //---------Atualiza a Tabela-------------
