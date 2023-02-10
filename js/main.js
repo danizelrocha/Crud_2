@@ -86,16 +86,14 @@ const clearTable = () => {
   rows.forEach((row) => row.parentNode.removeChild(row));
 };
 
-//---------Atualiza a Tabela-------------
+//---------Atualiza a Tabela--------------
 const updateTable = () => {
   const dbClient = readClient();
   clearTable();
   dbClient.forEach(createRow);
 };
 
-//--------Editar Deletar Tabela------------
-
-//--------------Editar----------
+//-------Editar da Tabela no Modal---------
 const editClient = (index) => {
   const client = readClient()[index];
   client.index = index;
@@ -104,7 +102,7 @@ const editClient = (index) => {
   openModal();
 };
 
-//------------Deletar-----------
+//------------Deletar da Tabela-------------
 const editDelete = (event) => {
   if (event.target.type == "button") {
     const [action, index] = event.target.id.split("-");
