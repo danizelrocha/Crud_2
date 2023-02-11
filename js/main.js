@@ -52,12 +52,12 @@ const saveClient = () => {
       celular: document.getElementById("celular").value,
       cidade: document.getElementById("cidade").value,
     };
-    const index = document.getElementById("nome").dataset.index
-    if(index == 'new') {
+    const index = document.getElementById("nome").dataset.index;
+    if (index == "new") {
       createClient(client);
       updateTable();
       closeModal();
-    } else{
+    } else {
       updateClient(index, client);
       updateTable();
       closeModal();
@@ -102,11 +102,11 @@ const updateTable = () => {
 
 //-------Editar da Tabela no Modal---------
 const fillFields = (client) => {
-  document.getElementById("nome").value = client.nome
-  document.getElementById("email").value = client.email
-  document.getElementById("celular").value = client.celular
-  document.getElementById("cidade").value = client.cidade
-  document.getElementById("nome").dataset.index = client.index
+  document.getElementById("nome").value = client.nome;
+  document.getElementById("email").value = client.email;
+  document.getElementById("celular").value = client.celular;
+  document.getElementById("cidade").value = client.cidade;
+  document.getElementById("nome").dataset.index = client.index;
 };
 
 const editClient = (index) => {
