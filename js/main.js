@@ -146,9 +146,13 @@ document
   .getElementById("cadastrarCliente")
   .addEventListener("click", openModal);
 
-document.getElementById("modalClose").addEventListener("click", closeModal);
+document
+  .getElementById("modalClose")
+  .addEventListener("click", closeModal);
 
-document.getElementById("salvar").addEventListener("click", saveClient);
+document
+   .getElementById("salvar")
+   .addEventListener("click", saveClient);
 
 document
   .querySelector("#tableClient>tbody")
