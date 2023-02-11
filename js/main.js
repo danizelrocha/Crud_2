@@ -94,11 +94,20 @@ const updateTable = () => {
 };
 
 //-------Editar da Tabela no Modal---------
+const fillFields = (client) => {
+  document.getElementById("nome").value = client.nome
+  document.getElementById("email").value = client.email
+  document.getElementById("celular").value = client.celular
+  document.getElementById("cidade").value = client.cidade
+};
+
 const editClient = (index) => {
   const client = readClient()[index];
   client.index = index;
   fillFields(client);
-  document.querySelector(".modal-header>h2").textContent = `Editando ${client.nome}`;
+  document.querySelector(
+    ".modal-header>h2"
+  ).textContent = `Editando ${client.nome}`;
   openModal();
 };
 
