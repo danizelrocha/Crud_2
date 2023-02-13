@@ -1,5 +1,3 @@
-"use strict";
-
 const openModal = () =>
   document.getElementById("modal").classList.add("active");
 
